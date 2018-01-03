@@ -1,0 +1,64 @@
+@import '~@angular/material/theming';
+
+mat-sidenav{
+    width: 250px;
+    background-color: transparent;
+    padding-left: 15px;
+    & > .enroll-student-btn{
+        
+        margin-top: 15px;
+        margin-bottom: 25px;
+        position: relative;
+        padding: 15px 35px 15px 35px ;
+        transform: translateX(-50%);
+        left: 50%;
+    }
+    & > a{
+        outline: none;
+        text-decoration: none;
+        color: #999999;
+        display: block;
+        padding: 20px;
+        border-radius: 3px;
+        width: 95%;
+        box-sizing: border-box;
+
+    }
+
+    & > .app-title{
+        height: 80px;
+        box-sizing: border-box;
+        padding: 15px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+}
+
+mat-toolbar{
+    position: fixed;
+    z-index: 6;
+    @include mat-elevation(10);
+    height:50px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    & > [mat-mini-fab]{
+        @include mat-elevation(0);
+        transform: scale(0.9);
+    }
+}
+
+mat-sidenav-container{
+    height: 100vh;
+}
+
+.spacer{
+    flex: 1 1 auto;
+}
+
+.activeLink{
+    background-color: red;
+    color: white !important;
+    @include mat-elevation(11);
+}

@@ -1,0 +1,11 @@
+<form action="" [formGroup]="myForm" (ngSubmit)="signIn(myForm)" >
+  <mat-form-field>
+    <input formControlName="email" matInput type="text" placeholder="Email" >
+    <mat-error *ngIf="myForm.controls.email.hasError('email')" >Invalid Email</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input formControlName="password" matInput type="password" placeholder="Password">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary"  type="submit" >Sign In</button>
+</form>

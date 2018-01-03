@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <span>App</span>
+    <div class="spacer"></div>
+    <button mat-mini-fab color="accent" [matMenuTriggerFor]="appMenu">D</button>
+
+    <mat-menu #appMenu="matMenu">
+        <button mat-menu-item> Profile </button>
+        <button mat-menu-item (click)="signOut()"> Sign Out </button>
+    </mat-menu>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav class="space-top" opened="true" mode='side'>
+        <div class="app-title">
+            SCES Registrar
+        </div>
+
+        <button class="enroll-student-btn" mat-raised-button color="accent" (click)="homeComponent?.sayHi()" >Enroll Student</button>
+         <a *ngFor="let department of departments" routerLinkActive="activeLink" [routerLink]="['/home']" [queryParams]="{department: department.id}">
+            {{department.name}}
+        </a> 
+
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet (activate)="getComponentfromRouterOutlet($event)" ></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
