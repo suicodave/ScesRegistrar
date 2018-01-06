@@ -10,7 +10,10 @@ body{
     padding-top: 100px;
 }
 
-
+.container{
+    padding-left: 30px;
+    padding-right: 30px;
+}
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -21,4 +24,11 @@ body{
 
 ::-webkit-scrollbar-thumb {
     background-color: rgb(54, 54, 54)  ;
+}
+
+.modal-container{
+    padding: 15px;
+}
+.mat-dialog-container{
+    padding: 10px !important;
 }

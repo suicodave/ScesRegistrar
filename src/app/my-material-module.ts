@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // tslint:disable-next-line:max-line-length
-import { MatToolbarModule, MatCardModule, MatListModule, MatSnackBarModule, MatButtonModule, MatInputModule, MatDialogModule, MatMenuModule, MatSelectModule, MatSidenavModule, MatFormFieldModule, MatPaginatorModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatListModule, MatSnackBarModule, MatButtonModule, MatInputModule, MatDialogModule, MatMenuModule, MatSelectModule, MatSidenavModule, MatFormFieldModule, MatPaginatorModule, MatIconModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule, MatDatepickerModule, MatNativeDateModule, NativeDateModule } from '@angular/material';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +16,14 @@ import { MatToolbarModule, MatCardModule, MatListModule, MatSnackBarModule, MatB
     MatSelectModule,
     MatSidenavModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule,
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NativeDateModule
   ],
   exports: [
     MatToolbarModule,
@@ -30,7 +37,14 @@ import { MatToolbarModule, MatCardModule, MatListModule, MatSnackBarModule, MatB
     MatSelectModule,
     MatSidenavModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule,
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NativeDateModule
   ],
   declarations: []
 })

@@ -5,6 +5,8 @@ import { AuthService } from '../services/auth.service';
 import { DepartmentService } from '../services/department.service';
 import { Department } from '../interfaces/department';
 import { HomeComponent } from '../home/home.component';
+import { MatDialog } from '@angular/material';
+import { AddStudentComponent } from '../modals/add-student/add-student.component';
 
 @Component({
   selector: 'app-index',
@@ -17,7 +19,7 @@ export class IndexComponent implements OnInit {
 
   departments: Department[];
   // tslint:disable-next-line:max-line-length
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private authService: AuthService, private departmentService: DepartmentService) { }
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private authService: AuthService, private departmentService: DepartmentService, private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -70,6 +72,14 @@ export class IndexComponent implements OnInit {
     }
 
 
+  }
+
+  addStudent() {
+    if (this.homeComponent instanceof HomeComponent) {
+      this.dialog.open(AddStudentComponent, {
+        width: '100%'
+      });
+    }
   }
 
 

@@ -15,6 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentService } from './services/department.service';
 import { DepartmentResolver } from './resolves/department.resolve';
+import { SchoolSettingService } from './services/school-setting.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AddStudentComponent } from './modals/add-student/add-student.component';
 
 
 @NgModule({
@@ -22,7 +25,8 @@ import { DepartmentResolver } from './resolves/department.resolve';
     AppComponent,
     IndexComponent,
     AuthComponent,
-    HomeComponent
+    HomeComponent,
+    AddStudentComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +36,12 @@ import { DepartmentResolver } from './resolves/department.resolve';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FlexLayoutModule
+
 
   ],
-  providers: [AuthService, AuthGuard, DepartmentService, DepartmentResolver],
+  entryComponents: [AddStudentComponent],
+  providers: [AuthService, AuthGuard, DepartmentService, DepartmentResolver, SchoolSettingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

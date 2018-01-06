@@ -1,0 +1,119 @@
+<div class="modal-container">
+  <div fxLayout="row" fxLayoutAlign="end">
+    <button mat-icon-button mat-dialog-close tabindex="-1">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <div class="modal-container">
+      <div *ngIf="settingsHasLoaded">
+        <mat-radio-group class="example-radio-group" (change)="initForms($event)" [(ngModel)]="oldOrNewStudent" fxLayout="row" fxLayoutGap="15px">
+          <mat-radio-button color="primary" *ngFor="let studentType of studentTypes" [value]="studentType">
+            {{studentType}}
+          </mat-radio-button>
+
+        </mat-radio-group>
+      </div>
+      <br>
+      <div *ngIf="oldOrNewStudent == 'New'">
+        <form action=""  (ngSubmit)="enrollStudent(newStudentForm)">
+          <div [formGroup]="newStudentForm">
+            <mat-form-field>
+              <input type="text" matInput placeholder="First Name" formControlName="first_name">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" matInput placeholder="Middle Name" formControlName="middle_name">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" matInput placeholder="Last Name" formControlName="last_name">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker1" placeholder="Birth Date" formControlName="birth_date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" matInput placeholder="Home Address" formControlName="home_address">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Gender" [(value)]="newStudentForm.value.gender" formControlName="gender">
+                <mat-option value="Male">
+                  Male
+                </mat-option>
+                <mat-option value="Female">
+                  Female
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" matInput placeholder="Father's Name" formControlName="father_name">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="text" matInput placeholder="Mother's Name" formControlName="mother_name">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="School Year" [(value)]="newStudentForm.value.school_year" formControlName="school_year">
+                <mat-option [value]="schoolYear.id" *ngFor="let schoolYear of schoolYears">
+                  {{schoolYear.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            Department
+            <mat-radio-group class="example-radio-group" (change)="checkIfCollegeDepartment($event)"  formControlName="department" fxLayout="row"
+              fxLayoutGap="15px">
+              <mat-radio-button color="primary" *ngFor="let department of departments" [value]="department">
+                {{department.name}}
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <div *ngIf="isCollege">
+                <mat-form-field>
+                    <mat-select  [(value)]="newStudentForm.value.college" placeholder="College" formControlName="college">
+                        <mat-option [value]="college.id" *ngFor="let college of colleges">
+                          {{college.name}}
+                        </mat-option>
+        
+                      </mat-select>
+                  </mat-form-field>
+            </div>
+
+            <mat-form-field>
+              <mat-select placeholder="School Year" [(value)]="newStudentForm.value.year_level" formControlName="year_level">
+                <mat-option>None</mat-option>
+                <mat-option [value]="yearLevel.id" *ngFor="let yearLevel of yearLevels">
+                  {{yearLevel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            
+
+          </div>
+
+          <button mat-raised-button type="submit" color="primary">Enroll</button>
+
+        </form>
+
+        Form {{newStudentForm.value | json }}
+        <p>
+          status {{newStudentForm.status}}
+        </p>
+      </div>
+
+      <div *ngIf="!settingsHasLoaded" fxLayout="column" fxLayoutAlign=" center" fxLayoutGap="15px">
+        <span>Fetching settings... Please wait...</span>
+        <mat-progress-bar fxFlex="30px" mode="buffer"></mat-progress-bar>
+      </div>
+
+    </div>
+  </mat-dialog-content>
+
+
+
+
+</div>

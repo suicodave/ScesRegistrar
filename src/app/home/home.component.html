@@ -1,6 +1,25 @@
-<div>
+<div class="container" >
   <div class="space-top">
-    {{currentDepartment?.name}}
+    
+    <div fxLayout="column" fxLayoutAlign="center center" >
+      <div>
+        <h2 class="mat-h2">{{currentDepartment?.name}} &nbsp; Department</h2>
+      </div>
+      <div  *ngIf="activeSchoolYear">
+        <mat-form-field>
+          <mat-select [(value)]="activeSchoolYear.id" (selectionChange)="getStudents($event)" placeholder="School Year">
+            <mat-option *ngFor="let schoolYear of schoolYears" [value]="schoolYear.id">
+              {{schoolYear.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+
+
+
     <mat-card *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
       {{item}}
     </mat-card>

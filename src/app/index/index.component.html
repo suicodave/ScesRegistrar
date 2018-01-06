@@ -14,7 +14,7 @@
             SCES Registrar
         </div>
 
-        <button class="enroll-student-btn" mat-raised-button color="accent" (click)="homeComponent?.sayHi()" >Enroll Student</button>
+        <button class="enroll-student-btn" mat-raised-button color="accent" (click)="addStudent()" >Enroll Student</button>
          <a *ngFor="let department of departments" routerLinkActive="activeLink" [routerLink]="['/home']" [queryParams]="{department: department.id}">
             {{department.name}}
         </a> 
