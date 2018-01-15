@@ -39,7 +39,6 @@ mat-toolbar{
     position: fixed;
     z-index: 6;
     @include mat-elevation(10);
-    height:50px;
     padding-left: 30px;
     padding-right: 30px;
 
@@ -61,4 +60,16 @@ mat-sidenav-container{
     background-color: red;
     color: white !important;
     @include mat-elevation(11);
+}
+
+.profilebtn{
+    margin-left: 15px;
+}
+
+.searchfield{
+    
+    color: white;
+
+    
+    
 }

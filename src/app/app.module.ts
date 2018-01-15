@@ -18,6 +18,8 @@ import { DepartmentResolver } from './resolves/department.resolve';
 import { SchoolSettingService } from './services/school-setting.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddStudentComponent } from './modals/add-student/add-student.component';
+import { StudentService } from './services/student.service';
+import { ShowStudentComponent } from './modals/show-student/show-student.component';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { AddStudentComponent } from './modals/add-student/add-student.component'
     IndexComponent,
     AuthComponent,
     HomeComponent,
-    AddStudentComponent
+    AddStudentComponent,
+    ShowStudentComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +43,9 @@ import { AddStudentComponent } from './modals/add-student/add-student.component'
 
 
   ],
-  entryComponents: [AddStudentComponent],
-  providers: [AuthService, AuthGuard, DepartmentService, DepartmentResolver, SchoolSettingService],
+  entryComponents: [AddStudentComponent, ShowStudentComponent],
+  providers: [AuthService, AuthGuard, DepartmentService, DepartmentResolver, SchoolSettingService, StudentService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,27 +1,80 @@
-<div class="container" >
+<div class="container">
   <div class="space-top">
-    
-    <div fxLayout="column" fxLayoutAlign="center center" >
-      <div>
-        <h2 class="mat-h2">{{currentDepartment?.name}} &nbsp; Department</h2>
+
+    <!-- student filter control -->
+    <div class="student-filter-controls">
+      <div *ngIf="settingsHasLoaded">
+        <div fxLayout="column" fxLayoutAlign="center center">
+          <div>
+            <h2 class="mat-h2">{{currentDepartment?.name}} Department</h2>
+          </div>
+          <div *ngIf="activeSchoolYear">
+            <mat-form-field>
+              <mat-select [(value)]="activeSchoolYear.id" (selectionChange)="schoolYearChange($event)" placeholder="School Year">
+                <mat-option *ngFor="let schoolYear of schoolYears" [value]="schoolYear.id">
+                  {{schoolYear.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
       </div>
-      <div  *ngIf="activeSchoolYear">
-        <mat-form-field>
-          <mat-select [(value)]="activeSchoolYear.id" (selectionChange)="getStudents($event)" placeholder="School Year">
-            <mat-option *ngFor="let schoolYear of schoolYears" [value]="schoolYear.id">
-              {{schoolYear.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div *ngIf="!settingsHasLoaded">
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+          <mat-spinner diameter="35" strokeWidth="4"></mat-spinner>
+          <span>Loading Settings...</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- student loading -->
+    <div *ngIf="!studentsHasLoaded && !isSearching " fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+      <span>
+        Loading Students...
+      </span>
+      <mat-spinner diameter="25" strokeWidth="2"></mat-spinner>
+    </div>
+
+    <!-- student listing -->
+    <div *ngIf="studentsHasLoaded && !isSearching ">
+      <div *ngIf="students.length==0" class="warn-label">
+        Nothing found in School Year {{activeSchoolYear.name}} at Department of {{currentDepartment.name}}
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px">
+
+        <mat-card (click)="showStudent(student)" fxFlex="30%" *ngFor="let student of students">
+          {{student.last_name}}, {{student.first_name}} {{student.middle_name}}
+        </mat-card>
       </div>
 
     </div>
 
+    <!-- searching loading -->
+    <div *ngIf="!searchHasLoaded && isSearching " fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+      <span>Looking for {{searchedQuery}} ... </span>
+      <mat-spinner diameter="25" strokeWidth="2"></mat-spinner>
+    </div>
 
 
+    <!-- searching data -->
+    <div *ngIf="searchHasLoaded">
+      <p *ngIf="searchedStudents.length!=0">
+        Found Students with keyword {{searchedQuery}}
+      </p>
+      <!-- not found -->
+      <div *ngIf="searchedStudents.length==0" class="warn-label">
+        Searched nothing with keyword : {{searchedQuery}}
+      </div>
+      <button mat-button (click)="closeSearching()">Exit</button>
 
-    <mat-card *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
-      {{item}}
-    </mat-card>
+      <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-card (click)="showStudent(student)" fxFlex="30%" *ngFor="let student of searchedStudents">
+          {{student.last_name}}, {{student.first_name}} {{student.middle_name}}
+        </mat-card>
+      </div>
+
+    </div>
+
   </div>
 </div>

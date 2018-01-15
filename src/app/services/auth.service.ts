@@ -27,7 +27,6 @@ export class AuthService {
   signOut() {
     localStorage.removeItem('auth');
     this.router.navigate(['auth']);
-
   }
 
   checkToken(): string | boolean {

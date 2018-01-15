@@ -62,7 +62,6 @@ export class AuthComponent implements OnInit {
 
     const token = this.authService.checkToken();
     if (token != null) {
-
       this.router.navigate([this.redirectTo]);
     }
   }

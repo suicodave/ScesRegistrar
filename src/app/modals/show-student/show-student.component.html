@@ -1,0 +1,133 @@
+<div fxLayout="row" fxLayoutAlign="end">
+  <button mat-icon-button mat-dialog-close tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="modal-container">
+
+  <h2 mat-dialog-title fxLayout="row" fxLayoutAlign="center">
+    <span>Student Profile</span>
+  </h2>
+  <mat-dialog-content>
+    <div class="details" fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="20px" *ngIf="!isEnrollMode">
+      <div class="col-1" fxFlex="50%">
+        <p>
+          ID : {{student.id}}
+        </p>
+        <p>
+          First Name : {{student.first_name}}
+        </p>
+        <p>
+          Middle Name : {{student.middle_name}}
+        </p>
+        <p>
+          Last Name : {{student.last_name}}
+        </p>
+        <p>
+          Email : {{student.email}}
+        </p>
+        <p>
+          Birthday : {{student.birthdate | date:'mediumDate' }}
+        </p>
+        <p>
+          Home Address : {{student.home_address}}
+        </p>
+
+      </div>
+      <div class="col-2" fxFlex="50%">
+        <p>
+          Father's Name : {{student.father_name}}
+        </p>
+        <p>
+          Mother's Name : {{student.mother_name}}
+        </p>
+        <p>
+          Department : {{student.department.name}}
+        </p>
+        <p>
+          College : {{student.college?.name}}
+        </p>
+        <p>
+          Year Level : {{student.year_level.name}}
+        </p>
+        <p>
+          School Year : {{student.school_year.name}}
+        </p>
+      </div>
+    </div>
+
+    <div class="enroll-mode" *ngIf="isEnrollMode">
+      <p>First Name : {{student.first_name}}</p>
+      <p>Middle Name : {{student.middle_name}} </p>
+      <p>Last Name : {{student.last_name}} </p>
+
+      <div class="loading" *ngIf="!settingsHasLoaded" fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="start center" >
+        <span>Loading data ...</span>
+        <mat-spinner diameter="25" strokeWidth="2"></mat-spinner>
+      </div>
+
+      <br>
+
+      <div class="controls" [formGroup]="myForm" *ngIf="settingsHasLoaded">
+        <mat-radio-group (change)="checkIfCollegeDepartment($event)" formControlName="department"
+          fxLayout="row" fxLayoutGap="15px">
+          <mat-radio-button [checked]=" department.id == student.department.id " color="primary" *ngFor="let department of departments" [value]="department">
+            {{department.name}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <br>
+        <div *ngIf="isCollege">
+          <mat-form-field>
+            <mat-select [errorStateMatcher]="matcher" [(value)]="myForm.value.college" placeholder="College" formControlName="college">
+              <mat-option>None</mat-option>
+              <mat-option [value]="college.id" *ngFor="let college of colleges">
+                {{college.name}}
+              </mat-option>
+
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <br>
+
+        <mat-form-field *ngIf="hasSelectedDepartment">
+          <mat-select placeholder="Year Level" [errorStateMatcher]="matcher" [(value)]="myForm.value.year_level" formControlName="year_level">
+            <mat-option>None</mat-option>
+            <mat-option [value]="yearLevel.id" *ngFor="let yearLevel of yearLevels">
+              {{yearLevel.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-select placeholder="School Year" [(value)]="myForm.value.school_year" formControlName="school_year">
+            <mat-option [value]="schoolYear.id" *ngFor="let schoolYear of schoolYears">
+              {{schoolYear.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="!isEnrollMode" (click)="enrollMode(true)" mat-raised-button color="primary">
+      Enroll This Student
+    </button>
+
+    <button *ngIf="isEnrollMode" (click)="enrollStudent(myForm)" mat-raised-button color="primary">
+      Enroll Now
+    </button>
+
+    <button mat-button *ngIf="isEnrollMode" (click)="enrollMode(false)">
+      Cancel
+    </button>
+
+  </mat-dialog-actions>
+
+</div>

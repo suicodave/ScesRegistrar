@@ -1,8 +1,16 @@
 <mat-toolbar color="primary">
     <span>App</span>
     <div class="spacer"></div>
-    <button mat-mini-fab color="accent" [matMenuTriggerFor]="appMenu">D</button>
 
+    <mat-form-field floatLabel="never" color="accent" class="searchfield">
+        <input matInput type="text" placeholder="Find Students" [(ngModel)]="value" #el (keyup.enter)="searchStudent(el,value)" />
+        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button class="profilebtn" mat-mini-fab color="accent" [matMenuTriggerFor]="appMenu">
+        D
+    </button>
     <mat-menu #appMenu="matMenu">
         <button mat-menu-item> Profile </button>
         <button mat-menu-item (click)="signOut()"> Sign Out </button>
@@ -14,14 +22,14 @@
             SCES Registrar
         </div>
 
-        <button class="enroll-student-btn" mat-raised-button color="accent" (click)="addStudent()" >Enroll Student</button>
-         <a *ngFor="let department of departments" routerLinkActive="activeLink" [routerLink]="['/home']" [queryParams]="{department: department.id}">
+        <button class="enroll-student-btn" mat-raised-button color="accent" (click)="addStudent()">Enroll Student</button>
+        <a *ngFor="let department of departments" routerLinkActive="activeLink" [routerLink]="['/home']" [queryParams]="{department: department.id}">
             {{department.name}}
-        </a> 
+        </a>
 
 
     </mat-sidenav>
     <mat-sidenav-content>
-        <router-outlet (activate)="getComponentfromRouterOutlet($event)" ></router-outlet>
+        <router-outlet (activate)="getComponentfromRouterOutlet($event)"></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
