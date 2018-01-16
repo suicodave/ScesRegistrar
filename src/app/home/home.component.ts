@@ -119,10 +119,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .take(1)
       .subscribe((res) => {
         this.searchedQuery = res;
-        console.log(this.searchedQuery);
         this.studentService.findStudents(undefined, undefined, undefined, this.searchedQuery).
           subscribe((searchRes: any) => {
-            console.log(searchRes.data);
 
             this.searchedStudents = searchRes.data;
             this.searchHasLoaded = true;

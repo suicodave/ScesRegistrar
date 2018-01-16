@@ -89,4 +89,17 @@ export class StudentService {
     });
   }
 
+  updateStudent(departmentId: number, colId: number, ylId: number, syId: number, id: number) {
+
+    const body = {
+      department_id: departmentId,
+      college_id: colId,
+      year_level_id: ylId,
+      school_year_id: syId
+    };
+    return this.http.put(apiUrl + `students/${id}`, body, {
+      headers: apiHeaders.append('Authorization', `Bearer ${this.authService.checkToken()}`)
+    });
+  }
+
 }

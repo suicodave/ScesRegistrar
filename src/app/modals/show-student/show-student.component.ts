@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject, OnDestroy, EventEmitter } from '@angular/core';
-import { MAT_DIALOG_DATA, MatRadioChange } from '@angular/material';
+import { MAT_DIALOG_DATA, MatRadioChange, MatSnackBar } from '@angular/material';
 import { Student, SchoolYear, Department, College, YearLevel } from '../../interfaces/department';
 import { SchoolSettingService } from '../../services/school-setting.service';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { StudentService } from '../../services/student.service';
 
 @Component({
   selector: 'app-show-student',
@@ -16,6 +17,7 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
   student: Student;
   isEnrollMode = false;
   schoolSettingObs;
+  studentSerObs;
 
   schoolYears: SchoolYear[];
   departments: Department[];
@@ -30,16 +32,19 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
   onEnrollSuccess = new EventEmitter();
   onEnrollFailure = new EventEmitter();
 
-  constructor( @Inject(MAT_DIALOG_DATA) private data, private schoolSettingService: SchoolSettingService, private fb: FormBuilder) { }
+  // tslint:disable-next-line:max-line-length
+  constructor( @Inject(MAT_DIALOG_DATA) private data, private schoolSettingService: SchoolSettingService, private fb: FormBuilder, private snackbar: MatSnackBar, private studentService: StudentService) { }
 
   ngOnInit() {
     this.student = this.data.student;
-    console.log(this.student);
 
   }
   ngOnDestroy() {
     if (this.schoolSettingObs != undefined) {
       this.schoolSettingObs.unsubscribe();
+    }
+    if (this.studentSerObs != undefined) {
+      this.studentSerObs.unsubscribe();
     }
   }
 
@@ -77,7 +82,7 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
   initForm() {
     this.myForm = this.fb.group({
       department: [this.student.department, Validators.required],
-      school_year: [this.activeSchoolYear.id, Validators.required],
+      school_year: [this.student.school_year.id, Validators.required],
       year_level: ['', Validators.required]
     });
     this.checkIfCollegeDepartment();
@@ -108,33 +113,32 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
   }
 
   enrollStudent(form: FormGroup) {
-    console.log(this.student);
     if (form.invalid) {
       return false;
     }
 
     const department_id = form.value.department.id;
+    const college_id = form.value.college || 0;
     const year_level_id = form.value.year_level;
     const school_year_id = form.value.school_year;
-    const college_id = form.value.college || 0;
-    // console.log(department_id);
-    // console.log(college_id);
-    // console.log(year_level_id);
-    // console.log(school_year_id);
 
-    this.student.department = this.departments.find((dep) => dep.id == department_id);
+    // tslint:disable-next-line:max-line-length
+    this.studentSerObs = this.studentService.updateStudent(department_id, college_id, year_level_id, school_year_id, this.student.id).subscribe(
+      (res: any) => {
 
-    const currentDep: Department = this.departments.find((dep) => dep.id == department_id);
+        this.student.department = this.departments.find((dep) => dep.id == department_id);
 
-    this.student.college = this.colleges.find((col) => col.id == college_id);
-    this.student.year_level = currentDep.year_levels.find((yl) => yl.id == year_level_id);
+        const currentDep: Department = this.departments.find((dep) => dep.id == department_id);
 
-    this.student.school_year = this.schoolYears.find((sy) => sy.id == school_year_id);
+        this.student.college = this.colleges.find((col) => col.id == college_id);
+        this.student.year_level = currentDep.year_levels.find((yl) => yl.id == year_level_id);
 
-    this.enrollMode(false);
+        this.student.school_year = this.schoolYears.find((sy) => sy.id == school_year_id);
 
-
-
+        this.enrollMode(false);
+        this.snackbar.open(res.externalMessage, 'OK');
+      }
+    );
   }
 
 
