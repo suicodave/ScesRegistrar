@@ -13,7 +13,7 @@ import { StudentService } from '../../services/student.service';
   styleUrls: ['./show-student.component.scss']
 })
 export class ShowStudentComponent implements OnInit, OnDestroy {
-
+  isEnrollingOld = false;
   student: Student;
   isEnrollMode = false;
   schoolSettingObs;
@@ -116,7 +116,7 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
     if (form.invalid) {
       return false;
     }
-
+    this.isEnrollingOld = true;
     const department_id = form.value.department.id;
     const college_id = form.value.college || 0;
     const year_level_id = form.value.year_level;
@@ -131,10 +131,13 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
         const currentDep: Department = this.departments.find((dep) => dep.id == department_id);
 
         this.student.college = this.colleges.find((col) => col.id == college_id);
+
         this.student.year_level = currentDep.year_levels.find((yl) => yl.id == year_level_id);
 
         this.student.school_year = this.schoolYears.find((sy) => sy.id == school_year_id);
 
+        this.isEnrollingOld = false;
+        
         this.enrollMode(false);
         this.snackbar.open(res.externalMessage, 'OK', {
           duration: 5000
