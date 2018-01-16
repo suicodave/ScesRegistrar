@@ -4,7 +4,7 @@
 
     <mat-form-field floatLabel="never" color="accent" class="searchfield">
         <input matInput type="text" placeholder="Find Students" [(ngModel)]="searchInput" #el (keyup.enter)="searchStudent(el,searchInput)" />
-        <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput=''">
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
