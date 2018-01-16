@@ -136,7 +136,9 @@ export class ShowStudentComponent implements OnInit, OnDestroy {
         this.student.school_year = this.schoolYears.find((sy) => sy.id == school_year_id);
 
         this.enrollMode(false);
-        this.snackbar.open(res.externalMessage, 'OK');
+        this.snackbar.open(res.externalMessage, 'OK', {
+          duration: 5000
+        });
       }
     );
   }
