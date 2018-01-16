@@ -15,6 +15,7 @@ import { StudentService } from '../services/student.service';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+  searchInput;
   homeComponent: HomeComponent;
   currentDepartment = 1;
 
