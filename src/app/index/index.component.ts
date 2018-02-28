@@ -88,7 +88,8 @@ export class IndexComponent implements OnInit {
           duration: 5000
         });
         if (this.homeComponent instanceof HomeComponent) {
-          this.homeComponent.getStudents();
+          // fix for loading after successful registration
+          // this.homeComponent.getStudents();
         }
 
       }
@@ -97,8 +98,8 @@ export class IndexComponent implements OnInit {
     const onRegisterFaulre = dialogref.componentInstance.onRegStudentFailure
       .subscribe(
       (err) => {
-        if ('externalMessage' in err) {
-          this.snackBar.open(err.externalMessage, 'Okay', {
+        if ('externalMessage' in err.error) {
+          this.snackBar.open(err.error.externalMessage, 'Okay', {
             duration: 5000
           });
         }
