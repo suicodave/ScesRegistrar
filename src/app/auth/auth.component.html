@@ -3,7 +3,7 @@
     <p>
       SCES Registrar
     </p>
-    <form action="" [formGroup]="myForm" (ngSubmit)="signIn(myForm)" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+    <form *ngIf="!isLogging" [formGroup]="myForm" (ngSubmit)="signIn(myForm)" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
       <mat-form-field>
         <input formControlName="email" matInput type="text" placeholder="Email">
         <mat-error *ngIf="myForm.controls.email.hasError('email')">Invalid Email</mat-error>
@@ -14,5 +14,9 @@
 
       <button mat-raised-button color="primary" type="submit">Sign In</button>
     </form>
+    <div fxLayout="column" *ngIf="isLogging" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <mat-spinner diameter="35" strokeWidth="4" ></mat-spinner>
+      <p>Signing In...</p>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

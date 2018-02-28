@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AuthComponent implements OnInit {
   myForm: FormGroup;
   redirectTo = '';
+  isLogging = false;
   // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private authService: AuthService, private snackBar: MatSnackBar, private router: Router) { }
 
@@ -31,6 +32,8 @@ export class AuthComponent implements OnInit {
     if (form.invalid) {
       return false;
     }
+
+    this.isLogging = true;
     const email = form.controls.email.value;
     const password = form.controls.password.value;
     this.authService.signIn(email, password).subscribe(
@@ -44,6 +47,8 @@ export class AuthComponent implements OnInit {
             duration: 3000
           });
         }
+
+        this.isLogging = false;
       }
     );
 
